@@ -1,0 +1,69 @@
+﻿<!-- FIPinator 3000 - FREE and open source (AGPL-3.0). Free to use, change, share and fork. https://github.com/Pribilof-Hangar/fipinator-3000 -->
+<UserControl x:Class="Fipinator.GaugeMaker.StartPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="40,32,40,32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="What would you like to do?" FontSize="28" FontWeight="SemiBold" />
+        <TextBlock Grid.Row="1" Style="{StaticResource Hint}" Margin="0,6,0,28" FontSize="14" TextWrapping="Wrap"
+                   Text="Set up your panels and change your gauges. What you save here shows on your FIPs in FIPinator Live. No FIP or sim needed. You don't need FIPinator 3000 open to fly: save, close it, and FIPinator Live runs your FIPs on its own." />
+
+        <UniformGrid Grid.Row="2" Columns="3" Rows="2" Height="400">
+            <Button x:Name="PanelsButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6" Padding="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <TextBlock Text="&#xE7F4;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="30" />
+                    <TextBlock Text="Set up your panel" FontSize="18" FontWeight="SemiBold" Margin="0,14,0,6" />
+                    <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap" Text="Your FIPs laid out like on your desk. Drag any gauge onto any FIP, from any plane, and save it as a new panel." />
+                </StackPanel>
+            </Button>
+            <Button x:Name="TweakButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6" Padding="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <TextBlock Text="&#xE70F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="30" />
+                    <TextBlock Text="Change how a gauge looks" FontSize="18" FontWeight="SemiBold" Margin="0,14,0,6" />
+                    <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap" Text="Pick one of your gauges or a ready-made one: change colours, needles and number boxes, move parts, try it with sliders." />
+                </StackPanel>
+            </Button>
+            <Button x:Name="CombineButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6" Padding="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <TextBlock Text="&#xF0E2;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="30" />
+                    <TextBlock Text="Combine gauges" FontSize="18" FontWeight="SemiBold" Margin="0,14,0,6" />
+                    <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap" Text="More gauges than FIPs? Put several needles on one dial, or two gauges side by side." />
+                </StackPanel>
+            </Button>
+            <!-- Only shown when SPAD.neXt is on the PC. Explains; changes nothing. -->
+            <Button x:Name="SpadButton" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6" Padding="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <StackPanel>
+                    <TextBlock Text="&#xE946;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="30" />
+                    <TextBlock Text="Using SPAD.neXt?" FontSize="18" FontWeight="SemiBold" Margin="0,14,0,6" />
+                    <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap" Text="Your gauges are ready for SPAD.neXt too. See how to add them." />
+                </StackPanel>
+            </Button>
+        </UniformGrid>
+
+        <!-- Making gauges from scratch is the AI part (owner, 2026-11-14): kept small, at the bottom. -->
+        <StackPanel Grid.Row="3" VerticalAlignment="Bottom" Margin="6,20,6,0">
+            <TextBlock Text="FIPinator is FREE and open source (AGPL-3.0): free to use, change, share and fork. Every gauge is too."
+                       Foreground="{DynamicResource SystemFillColorSuccessBrush}" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,0,0,10" />
+            <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap"
+                       Text="Making a brand-new gauge, from scratch or from a cockpit screenshot, works best with an AI assistant such as Claude. Claude is recommended (FIPinator was built with it), but any AI that can read and write files works. Give it our AI README and gauge-making guide." />
+            <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                <Button x:Name="AiGuideButton" Content="AI README (how to)" Margin="0,0,8,0" />
+                <Button x:Name="SkillButton" Content="Gauge-making guide (give it to the AI)" Margin="0,0,8,0" />
+                <Button x:Name="SetButton" Content="Airspeed from your plane (sim running)" />
+            </StackPanel>
+            <!-- Help, like FIPinator Live: logs (shared, kept 14 days), a problem report to copy, a GitHub issue to fill in. -->
+            <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+                <TextBlock Text="Help:" Style="{StaticResource Hint}" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <Button x:Name="LogsButton" Content="Logs" Margin="0,0,8,0" ToolTip="Opens the log folder (shared with FIPinator Live, kept 14 days)" />
+                <Button x:Name="CopyReportButton" Content="Copy problem report" Margin="0,0,8,0" ToolTip="Copies a short report to paste into a message. Your user name and FIP serial numbers are hidden." />
+                <Button x:Name="GitHubReportButton" Content="Report a problem" Margin="0,0,8,0" ToolTip="Opens GitHub's New issue page, filled in. You read it, add what happened and submit it there. Nothing is sent by FIPinator." />
+                <TextBlock x:Name="HelpStatus" Style="{StaticResource Hint}" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="420" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

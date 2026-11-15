@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- FIPinator 3000 (the gauge maker): a separate, optional app for making and tweaking gauges.
+       WPF with .NET's built-in Windows 11 (Fluent) theme. It only reads and writes gauge files;
+       It never talks to the FIPs. It reads (never changes) a few values from the sim when you
+       make a gauge "for the plane you're flying". -->
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>FIPinator3000</AssemblyName>
+    <RootNamespace>Fipinator.GaugeMaker</RootNamespace>
+    <!-- Live's gauge icon with a wrench badge (made by: fipinator-preview icon). -->
+    <ApplicationIcon>..\..\assets\icon\fipinator-3000.ico</ApplicationIcon>
+    <Product>FIPinator 3000</Product>
+    <Version>0.2.0</Version>
+    <!-- WPF's Windows 11 theme (ThemeMode) is marked "experimental" in .NET; it's what we want. -->
+    <NoWarn>$(NoWarn);WPF0001</NoWarn>
+    <!-- WPF's controls need the language data that Directory.Build.props switches off for the
+         other projects ("Cannot find non-neutral culture related to 'en-us'" on text boxes,
+         tick boxes and option buttons). Windows supplies the data, so it costs no download size. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fipinator.Core\Fipinator.Core.csproj" />
+    <!-- Read-only: reads the aircraft's design speeds for "For the plane you're flying". -->
+    <ProjectReference Include="..\Fipinator.Sim\Fipinator.Sim.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\assets\icon\fipinator-3000.ico" Link="fipinator-3000.ico" />
+  </ItemGroup>
+
+  <!-- Templates (the DC-6 gauges) and the font travel next to the program. -->
+  <ItemGroup>
+    <!-- gauges\dc6\parts: per-engine building blocks for the 1-4 gauges; never shown to users. -->
+    <None Include="..\..\gauges\classic\**\*.json" LinkBase="Templates\classic" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\gauges\turboprop\**\*.json" LinkBase="Templates\turboprop" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\gauges\jet\**\*.json" LinkBase="Templates\jet" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\gauges\templates\**\*.json" LinkBase="Templates\templates" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\gauges\dc6\**\*.json" Exclude="..\..\gauges\dc6\parts\**" LinkBase="Templates\dc6" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\assets\fonts\BarlowCondensed-Medium.ttf" Link="BarlowCondensed-Medium.ttf" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\docs\guides\spad-and-live.md" Link="Using SPAD.neXt and FIPinator Live.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\docs\guides\gauge-making-guide.md" Link="Gauge-making guide.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\docs\guides\making-gauges-with-ai.md" Link="Making gauges with AI.md" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="..\..\assets\fonts\OFL.txt" Link="OFL.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
+  <Target Name="DropPackagePdbs" AfterTargets="Publish">
+    <Delete Files="$(PublishDir)libSkiaSharp.pdb" />
+  </Target>
+
+</Project>

@@ -1,0 +1,10 @@
+﻿<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Fipinator.Core/Fipinator.Core.csproj" />
+    <Project Path="src/Fipinator.Sim/Fipinator.Sim.csproj" />
+    <Project Path="src/Fipinator.GaugeMaker/Fipinator.GaugeMaker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Fipinator.Core.Tests/Fipinator.Core.Tests.csproj" />
+  </Folder>
+</Solution>

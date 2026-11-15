@@ -1,0 +1,94 @@
+﻿<!-- FIPinator 3000 - FREE and open source (AGPL-3.0). Free to use, change, share and fork. https://github.com/Pribilof-Hangar/fipinator-3000 -->
+<UserControl x:Class="Fipinator.GaugeMaker.AirspeedPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Fipinator.GaugeMaker">
+    <Grid Margin="40,24,40,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Airspeed for the plane you're flying" FontSize="24" FontWeight="SemiBold" Grid.ColumnSpan="3" />
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="3" Style="{StaticResource Hint}" Margin="0,4,0,18" FontSize="14"
+                   Text="FIPinator reads your aircraft's speeds from the sim and draws the arcs and red line to match. Change any number; the picture follows." />
+
+        <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Auto">
+        <Border Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel>
+                <DockPanel Margin="0,0,0,14">
+                    <TextBlock x:Name="SimIcon" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="16" Width="26" VerticalAlignment="Top" Margin="0,2,0,0" />
+                    <TextBlock x:Name="SimStatus" TextWrapping="Wrap" />
+                </DockPanel>
+
+                <Grid x:Name="Fields">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" VerticalAlignment="Center" TextWrapping="Wrap" Text="Stall, flaps down (start of white arc)" />
+                    <TextBox x:Name="Vs0" Grid.Row="0" Grid.Column="1" Margin="0,4" />
+                    <TextBlock Grid.Row="1" VerticalAlignment="Center" TextWrapping="Wrap" Text="Top flap speed (end of white arc, leave empty if unknown)" />
+                    <TextBox x:Name="Vfe" Grid.Row="1" Grid.Column="1" Margin="0,4" />
+                    <TextBlock Grid.Row="2" VerticalAlignment="Center" TextWrapping="Wrap" Text="Stall, clean (start of green arc)" />
+                    <TextBox x:Name="Vs1" Grid.Row="2" Grid.Column="1" Margin="0,4" />
+                    <TextBlock Grid.Row="3" VerticalAlignment="Center" TextWrapping="Wrap" Text="Top of green arc (max cruise, yellow starts)" />
+                    <TextBox x:Name="Vc" Grid.Row="3" Grid.Column="1" Margin="0,4" />
+                    <TextBlock x:Name="VcHint" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource Hint}" TextWrapping="Wrap" Margin="0,0,0,6" Visibility="Collapsed"
+                               Text="The sim's number here is its 'design cruise' speed, which is often lower than the real top of the green arc. Check it against your cockpit's airspeed indicator or the handbook." />
+                    <TextBlock Grid.Row="5" VerticalAlignment="Center" TextWrapping="Wrap" Text="Never exceed (red line)" />
+                    <TextBox x:Name="Vne" Grid.Row="5" Grid.Column="1" Margin="0,4" />
+                    <TextBlock Grid.Row="6" Grid.ColumnSpan="2" FontWeight="SemiBold" Margin="0,12,0,2" Text="Twin-engine planes only (leave empty otherwise)" />
+                    <TextBlock Grid.Row="7" VerticalAlignment="Center" TextWrapping="Wrap" Text="Slowest speed you can steer with one engine out (red line)" />
+                    <TextBox x:Name="Vmc" Grid.Row="7" Grid.Column="1" Margin="0,4" />
+                    <TextBlock Grid.Row="8" VerticalAlignment="Center" TextWrapping="Wrap" Text="Best climb on one engine (blue line)" />
+                    <TextBox x:Name="Vyse" Grid.Row="8" Grid.Column="1" Margin="0,4" />
+                </Grid>
+                <TextBlock Style="{StaticResource Hint}" Margin="0,6,0,0" Text="All speeds in knots." />
+                <TextBlock x:Name="Error" Foreground="{DynamicResource SystemFillColorCriticalBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
+                <Button x:Name="ReadAgain" Content="Read the speeds from the sim again" Margin="0,12,0,0" IsEnabled="False" />
+            </StackPanel>
+        </Border>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <StackPanel Width="480">
+                <Grid ClipToBounds="True" Width="480" Height="360">
+                    <Image x:Name="Preview" Width="480" Height="360" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Image x:Name="Reference" Width="480" Height="360" Visibility="Collapsed" />
+                </Grid>
+                <TextBlock x:Name="Live" Style="{StaticResource Hint}" Margin="0,10,0,0" TextWrapping="Wrap" />
+                <local:ReferencePicture x:Name="RefPicture" Margin="0,14,0,0" />
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource Card}" Margin="0,18,0,0">
+            <DockPanel LastChildFill="False">
+                <TextBlock Text="Name your gauge" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,14,0" />
+                <TextBox x:Name="NameBox" Width="280" VerticalAlignment="Center" Text="Airspeed" />
+                <TextBlock x:Name="SaveError" Foreground="{DynamicResource SystemFillColorCriticalBrush}" VerticalAlignment="Center" Margin="12,0,0,0" />
+                <Button x:Name="Save" DockPanel.Dock="Right" Content="Save and open" Style="{StaticResource AccentButtonStyle}" Margin="8,0,0,0" />
+                <Button x:Name="Back" DockPanel.Dock="Right"><StackPanel Orientation="Horizontal"><TextBlock Text="&#xE80F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,8,0" /><TextBlock Text="Home" /></StackPanel></Button>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

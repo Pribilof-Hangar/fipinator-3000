@@ -1,0 +1,9 @@
+﻿<!-- FIPinator 3000 - FREE and open source (AGPL-3.0). Free to use, change, share and fork. https://github.com/Pribilof-Hangar/fipinator-3000 -->
+<Window x:Class="Fipinator.GaugeMaker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FIPinator 3000" Width="1180" Height="780" MinWidth="960" MinHeight="640"
+        WindowStartupLocation="CenterScreen" Icon="fipinator-3000.ico"
+        Background="{DynamicResource CockpitPanelBrush}" Foreground="{DynamicResource CockpitTextBrush}">
+    <ContentControl x:Name="Page" />
+</Window>

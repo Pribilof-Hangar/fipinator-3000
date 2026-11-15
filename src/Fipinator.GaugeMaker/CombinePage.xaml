@@ -1,0 +1,49 @@
+﻿<!-- FIPinator 3000 - FREE and open source (AGPL-3.0). Free to use, change, share and fork. https://github.com/Pribilof-Hangar/fipinator-3000 -->
+<UserControl x:Class="Fipinator.GaugeMaker.CombinePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Headings sit outside the two-column grid: wrapping text spanning a star column and an
+         auto column sent WPF's layout into an endless loop (a stack overflow crash). -->
+    <DockPanel Margin="40,24,40,24">
+        <TextBlock DockPanel.Dock="Top" Text="Combine gauges" FontSize="24" FontWeight="SemiBold" />
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource Hint}" Margin="0,4,0,18" FontSize="14" TextWrapping="Wrap"
+                   Text="More gauges than FIPs? Put several on one FIP. Tick the gauges in the order you want them (the first one's dial is used), then pick how to combine them." />
+
+        <Border DockPanel.Dock="Bottom" Style="{StaticResource Card}" Margin="0,18,0,0">
+            <DockPanel LastChildFill="False">
+                <TextBlock Text="Name your gauge" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,14,0" />
+                <TextBox x:Name="NameBox" Width="280" VerticalAlignment="Center" />
+                <Button x:Name="Save" DockPanel.Dock="Right" Content="Save and open" Style="{StaticResource AccentButtonStyle}" Margin="8,0,0,0" IsEnabled="False" />
+                <Button x:Name="Back" DockPanel.Dock="Right"><StackPanel Orientation="Horizontal"><TextBlock Text="&#xE80F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,8,0" /><TextBlock Text="Home" /></StackPanel></Button>
+                <TextBlock x:Name="SaveError" Foreground="{DynamicResource SystemFillColorCriticalBrush}" VerticalAlignment="Center" Margin="12,0,0,0" />
+            </DockPanel>
+        </Border>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0">
+                <TextBox x:Name="Filter" DockPanel.Dock="Top" Margin="0,0,0,8" ToolTip="Type to find a gauge, e.g. rpm" />
+                <TextBlock x:Name="Picked" DockPanel.Dock="Bottom" Style="{StaticResource Hint}" TextWrapping="Wrap" Margin="0,8,0,0" />
+                <ListBox x:Name="List" />
+            </DockPanel>
+
+            <Border Grid.Column="2" Style="{StaticResource Card}" VerticalAlignment="Top">
+                <StackPanel Width="480">
+                    <RadioButton x:Name="Needles" GroupName="How" IsChecked="True" Content="One dial, more needles" FontWeight="SemiBold" />
+                    <TextBlock Style="{StaticResource Hint}" Margin="28,0,0,8" TextWrapping="Wrap"
+                               Text="For the same kind of dial, e.g. RPM 1-2 + RPM 3-4, or BMEP 1, 2, 3 and 4. Needles get numbers." />
+                    <RadioButton x:Name="Side" GroupName="How" Content="Side by side" FontWeight="SemiBold" />
+                    <TextBlock Style="{StaticResource Hint}" Margin="28,0,0,12" TextWrapping="Wrap"
+                               Text="Any two gauges, each at two-thirds size, e.g. oil temperature 1-2 next to 3-4." />
+                    <Image x:Name="Preview" Width="480" Height="360" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock x:Name="Error" Foreground="{DynamicResource SystemFillColorCriticalBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </DockPanel>
+</UserControl>

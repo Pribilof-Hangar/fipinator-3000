@@ -1,0 +1,81 @@
+﻿<!-- FIPinator 3000 - FREE and open source (AGPL-3.0). Free to use, change, share and fork. https://github.com/Pribilof-Hangar/fipinator-3000 -->
+<UserControl x:Class="Fipinator.GaugeMaker.PanelPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- "Set up your panel": the panel's FIPs as boxes on a desk, laid out like the real ones. Drag gauges
+         between FIPs, or from the list of every gauge onto a FIP; save, or save as a new panel. -->
+    <Grid Margin="24,16,24,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="340" />
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.ColumnSpan="3" Margin="0,0,0,14">
+            <Button x:Name="Back" DockPanel.Dock="Left" Margin="0,0,14,0"><StackPanel Orientation="Horizontal"><TextBlock Text="&#xE80F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,8,0" /><TextBlock Text="Home" /></StackPanel></Button>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Set up your panel" FontSize="20" FontWeight="SemiBold" />
+                <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap"
+                           Text="Each box is one FIP. To put a FIP where it sits on your desk, drag its box by the top bar, or drag its picture onto an empty spot. Drag a picture onto another box to swap the gauges, or drag any gauge from the list on the right onto a box. Right-click a box to replace its gauge or add one to flip through." />
+            </StackPanel>
+        </DockPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+                    <TextBlock Text="Panel" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,12,0" />
+                    <ComboBox x:Name="Panels" DisplayMemberPath="Name" />
+                </DockPanel>
+                <TextBlock DockPanel.Dock="Top" Style="{StaticResource Hint}" TextWrapping="Wrap" Margin="0,0,0,8"
+                           Text="Not sure which FIP is which? In FIPinator Live, open &quot;What's on my FIPs&quot; and click a box: that FIP shows its name. The last 4 letters match the boxes here." />
+                <!-- Layouts (owner, 2026-11-14): whole sets of gauges for the same FIPs, switched with one FIP button in Live. -->
+                <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8" LastChildFill="False">
+                    <TextBlock Text="Layout" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,12,0" />
+                    <ComboBox x:Name="Layouts" MinWidth="160" Margin="0,0,8,0" ToolTip="The set of gauges you're looking at" />
+                    <Button x:Name="NewLayout" Content="+ New layout" Margin="0,0,8,0" ToolTip="A second set of gauges for the same FIPs (e.g. Nav and Engines), switched with one FIP button" />
+                    <Button x:Name="RenameLayout" Content="Rename" Margin="0,0,8,0" />
+                    <Button x:Name="DeleteLayout" Content="Remove" IsEnabled="False" />
+                </DockPanel>
+                <DockPanel x:Name="SwitchRow" DockPanel.Dock="Bottom" Margin="0,8,0,0" LastChildFill="False" Visibility="Collapsed">
+                    <TextBlock Text="In FIPinator Live, switch every FIP to the next layout with" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <ComboBox x:Name="SwitchFip" MinWidth="120" Margin="0,0,6,0" />
+                    <TextBlock Text="button" VerticalAlignment="Center" Margin="0,0,6,0" />
+                    <ComboBox x:Name="SwitchButton" MinWidth="60" />
+                </DockPanel>
+                <ScrollViewer x:Name="DeskScroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Canvas x:Name="Desk" Background="#15181B" MinWidth="800" MinHeight="460" />
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Card}">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="Every gauge" FontWeight="SemiBold" />
+                <TextBlock DockPanel.Dock="Top" Style="{StaticResource Hint}" TextWrapping="Wrap" Margin="0,2,0,6"
+                           Text="Click a FIP box, then pick a gauge here. &quot;Put on&quot; replaces what the box shows; &quot;Add as a new page&quot; adds it, so the FIP can flip between them (two horizons, say). Any gauge goes on any FIP; engine gauges only move when your plane has those values." />
+                <TextBox x:Name="Search" DockPanel.Dock="Top" Margin="0,0,0,6" ToolTip="Type part of a name or group, e.g. horizon, DC-6, 727" />
+                <StackPanel DockPanel.Dock="Bottom">
+                    <Image x:Name="Preview" Width="240" Height="180" Margin="0,8,0,8" HorizontalAlignment="Left" />
+                    <Button x:Name="PutHere" Content="Put on selected FIP" IsEnabled="False" HorizontalAlignment="Stretch" Margin="0,0,0,6" />
+                    <Button x:Name="AddPage" Content="Add to selected FIP as a page" IsEnabled="False" HorizontalAlignment="Stretch" />
+                </StackPanel>
+                <ListBox x:Name="Library" DisplayMemberPath="Text" />
+            </DockPanel>
+        </Border>
+
+        <Border Grid.Row="2" Grid.ColumnSpan="3" Style="{StaticResource Card}" Margin="0,14,0,0">
+            <DockPanel LastChildFill="True">
+                <Button x:Name="SaveAs" DockPanel.Dock="Right" Content="Save as new panel..." IsEnabled="False" Margin="8,0,0,0" />
+                <Button x:Name="Save" DockPanel.Dock="Right" Content="Save" Style="{StaticResource AccentButtonStyle}" IsEnabled="False" Margin="8,0,0,0" />
+                <Button x:Name="Undo" DockPanel.Dock="Right" Content="Undo all changes" IsEnabled="False" />
+                <TextBlock x:Name="Status" Style="{StaticResource Hint}" VerticalAlignment="Center" TextWrapping="Wrap"
+                           Text="Nothing changes until you save. A copy of the panel is kept before saving." />
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

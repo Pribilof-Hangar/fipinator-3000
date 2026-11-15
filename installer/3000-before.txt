@@ -1,0 +1,14 @@
+FIPinator 3000 is the gauge maker for FIPinator: start from a template, build an airspeed gauge from
+your aircraft's speeds, combine gauges, change their look, and tweak them. It's free and open source
+(AGPL-3.0).
+
+It's optional: FIPinator Live already comes with all the ready-made gauges. Install FIPinator 3000 only
+if you want to make or change gauges. You don't need a FIP or the sim to use it (reading speeds from the
+sim needs MSFS 2024 running).
+
+FIPinator 3000 can also save your own gauges for SPAD.neXt.
+
+Installs for your Windows user only (no administrator rights). The gauges you make are kept in
+Documents\FIPinator 3000\Gauges, and uninstalling never deletes them.
+
+Made for Windows 11.

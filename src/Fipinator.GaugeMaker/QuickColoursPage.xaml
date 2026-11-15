@@ -1,0 +1,63 @@
+﻿<!-- FIPinator 3000 - FREE and open source (AGPL-3.0). Free to use, change, share and fork. https://github.com/Pribilof-Hangar/fipinator-3000 -->
+<UserControl x:Class="Fipinator.GaugeMaker.QuickColoursPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- "Quick colours": the easy way to recolour a gauge (owner, 2026-11-14). The gauge's colours in plain
+         groups; click one, pick a new colour. The full editor is one click away for everything else. -->
+    <Grid Margin="24,16,24,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.ColumnSpan="3" Margin="0,0,0,14">
+            <Button x:Name="Back" DockPanel.Dock="Left" Margin="0,0,14,0"><StackPanel Orientation="Horizontal"><TextBlock Text="&#xE80F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,8,0" /><TextBlock Text="Home" /></StackPanel></Button>
+            <Button x:Name="FullEditor" DockPanel.Dock="Right" Content="Full editor" Margin="8,0,0,0" />
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock x:Name="Heading" Text="Quick colours" FontSize="20" FontWeight="SemiBold" />
+                <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap"
+                           Text="Click a colour and pick a new one. Each group changes on its own: orange needles, white numbers stay white. Undo goes back one step." />
+            </StackPanel>
+        </DockPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource Card}" VerticalAlignment="Top">
+            <Border Background="#202224" CornerRadius="4" Padding="6">
+                <Image x:Name="Preview" Width="480" Height="360" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+            </Border>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Card}">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12" LastChildFill="False">
+                    <TextBlock Text="Or pick a whole look" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <ComboBox x:Name="Look" Width="260" SelectedIndex="0">
+                        <ComboBoxItem Content="Pick a look..." />
+                        <ComboBoxItem Content="Classic grey" Tag="Classic" />
+                        <ComboBoxItem Content="Black (Cessna style)" Tag="Black" />
+                        <ComboBoxItem Content="DC-6 dark" Tag="Dc6" />
+                        <ComboBoxItem Content="Light grey (twin style)" Tag="LightTwin" />
+                        <ComboBoxItem Content="727 (old Boeing, grey-green)" Tag="Boeing727" />
+                        <ComboBoxItem Content="737 Classic (-300/-400/-500, tan)" Tag="Boeing737Classic" />
+                    </ComboBox>
+                </DockPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="Groups" />
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <Border Grid.Row="2" Grid.ColumnSpan="3" Style="{StaticResource Card}" Margin="0,14,0,0">
+            <DockPanel LastChildFill="True">
+                <Button x:Name="Save" DockPanel.Dock="Right" Content="Save" Style="{StaticResource AccentButtonStyle}" IsEnabled="False" Margin="8,0,0,0" />
+                <Button x:Name="Undo" DockPanel.Dock="Right" Content="Undo" IsEnabled="False" />
+                <TextBlock x:Name="Status" Style="{StaticResource Hint}" VerticalAlignment="Center" TextWrapping="Wrap" />
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>
