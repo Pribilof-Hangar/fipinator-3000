@@ -57,14 +57,26 @@
             <DockPanel>
                 <TextBlock DockPanel.Dock="Top" Text="Every gauge" FontWeight="SemiBold" />
                 <TextBlock DockPanel.Dock="Top" Style="{StaticResource Hint}" TextWrapping="Wrap" Margin="0,2,0,6"
-                           Text="Click a FIP box, then pick a gauge here. &quot;Put on&quot; replaces what the box shows; &quot;Add as a new page&quot; adds it, so the FIP can flip between them (two horizons, say). Any gauge goes on any FIP; engine gauges only move when your plane has those values." />
-                <TextBox x:Name="Search" DockPanel.Dock="Top" Margin="0,0,0,6" ToolTip="Type part of a name or group, e.g. horizon, DC-6, 727" />
+                           Text="Click a FIP box, then pick a gauge. Any gauge goes on any FIP."
+                           ToolTip="&quot;Put on&quot; replaces what the box shows; &quot;Add as a page&quot; adds it, so the FIP can flip between them (two horizons, say). Engine gauges only move when your plane has those values." />
+                <DockPanel DockPanel.Dock="Top" Margin="0,0,0,6">
+                    <TextBlock DockPanel.Dock="Left" Text="&#xE721;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" VerticalAlignment="Center" Margin="2,0,8,0" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    <TextBox x:Name="Search" ToolTip="Search: type part of a name or group, e.g. horizon, DC-6, 727" />
+                </DockPanel>
                 <StackPanel DockPanel.Dock="Bottom">
-                    <Image x:Name="Preview" Width="240" Height="180" Margin="0,8,0,8" HorizontalAlignment="Left" />
+                    <!-- The picture only takes room once a gauge is picked, so the list gets the space. -->
+                    <Image x:Name="Preview" Width="200" Height="150" Margin="0,8,0,8" HorizontalAlignment="Center" Visibility="Collapsed" />
                     <Button x:Name="PutHere" Content="Put on selected FIP" IsEnabled="False" HorizontalAlignment="Stretch" Margin="0,0,0,6" />
                     <Button x:Name="AddPage" Content="Add to selected FIP as a page" IsEnabled="False" HorizontalAlignment="Stretch" />
                 </StackPanel>
-                <ListBox x:Name="Library" DisplayMemberPath="Text" />
+                <ListBox x:Name="Library" DisplayMemberPath="Text">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                            <Setter Property="Padding" Value="10,4" />
+                            <Setter Property="MinHeight" Value="28" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
             </DockPanel>
         </Border>
 

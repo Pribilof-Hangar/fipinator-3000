@@ -66,7 +66,12 @@ public partial class PanelPage : UserControl
         Back.Click += (_, _) => window.ShowStart();
         Panels.SelectionChanged += (_, _) => { if (Panels.SelectedItem is PanelItem p) LoadPanel(p); };
         Search.TextChanged += (_, _) => FilterLibrary();
-        Library.SelectionChanged += (_, _) => { Preview.Source = Library.SelectedItem is Choice c ? Picture(c.Path) : null; UpdateButtons(); };
+        Library.SelectionChanged += (_, _) =>
+        {
+            Preview.Source = Library.SelectedItem is Choice c ? Picture(c.Path) : null;
+            Preview.Visibility = Preview.Source is null ? Visibility.Collapsed : Visibility.Visible;
+            UpdateButtons();
+        };
         Library.PreviewMouseLeftButtonDown += (_, e) => _pressAt = e.GetPosition(Library);
         Library.PreviewMouseMove += LibraryDrag;
         PutHere.Click += (_, _) => { if (Library.SelectedItem is Choice c && _selected is { } s) PutGauge(s, Shown(s), c.Path); };
